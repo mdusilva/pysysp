@@ -20,7 +20,7 @@ setup(
 
       author = "Manuel Silva",
       author_email = "madusilva@gmail.com",
-      url='https://github.com/mdusilva/pysysp'
+      url='https://github.com/mdusilva/pysysp',
       license="GPLv2",
       classifiers=[
           "Intended Audience :: Developers",
