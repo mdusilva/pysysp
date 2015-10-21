@@ -68,4 +68,4 @@ array([  1.23810533e-17,   1.67559561e-17,   1.78002369e-17, ...,
 
 from pysysp import StarSpectrum, BandPass, showfilters, listlaws
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
