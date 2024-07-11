@@ -1,15 +1,13 @@
 import glob
 import os
 import warnings
+import pprint
 
 import numpy as np
-import pyfits
-try:
-    from scipy import interpolate
-except ImportError:
-    interpolate = None
+import astropy.io.fits as pyfits
+from scipy import interpolate
 
-import extinction as extlaws
+from .extinction import extlaws
 
 c = 2.99792458e18 #speed of light in Angstron/sec
 
@@ -46,9 +44,46 @@ def _listfiles(dirname):
         
 _listfiles(filterdir)
 
+def add_filter(file_path, name=None, system=None):
+    """
+    Add a new filter to Pysysp package's library
+
+    Parameters
+    ----------
+    file_path: string 
+        indicates the name of a file with the filter to add.
+        It accepts files in plain ASCII 
+        with two columns: wavelength and response.
+    name: string, default is None
+        New filter name (must be different from current names 
+        in the current library)
+    system: system, default is None
+        Filer system, if None it will be saved under "Unknown_system"
+    """
+    data = np.loadtxt(file_path)
+    if len(data.shape) != 2 or data.shape[1] != 2:
+        print("File must contain two columns (wavelength, filter response)")
+        return
+    default_name, fileExtension = os.path.splitext(os.path.basename(file_path))
+    if name is None:
+        name = default_name
+    save_path = filterdir
+    if system is None:
+        system = "Unknown_system"
+    save_path = os.path.join(filterdir, system)
+    if not os.path.isdir(save_path):
+        os.mkdir(save_path)
+    complete_path = os.path.join(save_path, name + ".dat")
+    if not os.path.exists(complete_path):
+        np.savetxt(complete_path, data)
+        print("Filter %s added to filter library" % name)
+        _listfiles(filterdir)
+    else:
+        print("Filter %s could not be added to library because a filter with this name already exists." % name)
+
 #Initialize list of available extincion laws - only Cardelli is implemented at the moment
-lawsdic = {'cardelli': extlaws.cardelli}
-listlaws = lawsdic.keys()
+
+listlaws = list(extlaws.keys())
 
 def _file_exists(name):
     """Check if a file exists and is accessible"""
@@ -167,8 +202,8 @@ class StarSpectrum(GeneralSpectrum):
         r = self._waverange(band.wavelength, self.wavelength)
         wr = self.wavelength[r]
         fr = self.flux[r]
-        if law in lawsdic:
-            f = np.trapz(fr * band(wr) * wr * 10.**(-0.4 * lawsdic[law](wr,**kwargs)), \
+        if law in extlaws:
+            f = np.trapz(fr * band(wr) * wr * 10.**(-0.4 * extlaws[law](wr,**kwargs)), \
             x=wr) / np.trapz(fr * band(wr) * wr, x=wr)
         else:
             raise ValueError('Extinction law is not a valid choice, check input string')

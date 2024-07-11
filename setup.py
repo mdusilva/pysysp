@@ -31,7 +31,7 @@ setup(
           "Topic :: Scientific/Engineering :: Astronomy"
 
       ],
-      install_requires = ["numpy", "pyfits"],
+      install_requires = ["numpy", "astropy", "scipy"],
       package_data = {
           '' : ['alpha_lyr_stis_006.fits', 'filters/Bessel/*.dat','filters/Gaia/*.dat']
       },

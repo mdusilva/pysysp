@@ -40,3 +40,5 @@ def cardelli(wavelength, A=0., Rv=3.1):
         ans.append(A * (a + b / Rv))
         
     return np.array(ans)
+
+extlaws = {'cardelli': cardelli}
