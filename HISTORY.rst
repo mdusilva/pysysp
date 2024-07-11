@@ -1,4 +1,5 @@
-changelog:
+Changelog
+=========
 
 1.0.0 (09/04/2015)
 ------------------
@@ -8,10 +9,10 @@ changelog:
 1.0.1 (21/10/2015)
 ------------------
 
-- added MANIFEST.in file
+- Added MANIFEST.in file
 
 2.0.1 (11/07/2024)
 ------------------
 
-- compatibility with Python 3
-- can now add new filters
+- Compatibility with Python 3
+- Can now add new filters
