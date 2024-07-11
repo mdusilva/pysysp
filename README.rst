@@ -35,7 +35,6 @@ Usage example
 -------------
 
 .. code-block:: python
-   :caption: Interactive Python session
    :name: usage_example
 
     >>> import pysysp
