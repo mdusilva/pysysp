@@ -46,6 +46,9 @@ array([  1.23810533e-17,   1.67559561e-17,   1.78002369e-17, ...,
 #You can also load any ascii file with two columns (first wavelength, second filter response)
 >>> B2 = pysysp.BandPass('./filters/B.dat')
 
+#You can also permanetly add a new filter to the libary of available filters
+>>> pysysp.add_filter('test.txt', name='T')
+
 #compute the V magnitude in Vega system
 #The magnitude of Vega in V band is not 0, so in order to
 #compute the correct value we should correct the zero point
